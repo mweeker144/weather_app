@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- <link rel="stylesheet" href="css/style.css" media="screen" charset="utf-8"> -->
+  </head>
+  
+  <body>
+    
+    <nav class="navbar navbar-dark bg-dark mb-3">
+      <div class="container">
+        <span class="navbar-brand">WeatherAppUSA</span>
+      </div>
+    </nav>
+  
+    <div id="search-container" class="container">
+      <div id="search" class="card card-body bg-light mb-2">
+        <h4>Weather Search</h4>
+        <form id="search-form">
+          <div class="form-group">
+            <input type="text" id="search-input" class="form-control mb-3" placeholder="Enter Zip code">
+          </div>
+          <!-- <h5 class="mt-2">Forecast Days: </h5>
+          <div class="form-group">
+            <select name="limit" id="limit" class="form-control">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7" selected>7</option>
+            </select>
+          </div> -->
+          <button type="submit" class="btn btn-info btn-block mt-4">Search</button>
+        </form>
+      </div>
+      <div id="results"></div>
+    </div>
+  
+  <!-- <h1 class="d-none">Hello!!!!</h1> -->
+  
+  
+  <!-- <div class="card-group px-2">
+    <div class="card text-center mb-2" style="width: 18rem;">
+      <div class="card-body">
+        <h3 class="card-title text-bold"><b>Location Found!</b></h3>
+        <h5 class="card-text">See the upcoming 7 day weather forecast below for city, state.</h5>
+      </div>
+    </div>
+  </div> -->
+  <!-- <div class="card-group px-2">
+    <div class="card text-center bg-secondary mb-2 col-sm-12" style="width: 18rem;">
+      <div class="card-body">
+        <h3 class="card-title text-bold"><b>No results found</b></h3>
+      </div>
+    </div>
+  </div> -->
+  <div id="error-component" class="d-none">
+  <span id="error-text" class="d-block p-2 bg-secondary text-white text-center mb-2 d-none"><b>Error Text Here</b></span>
+  </div>
+  
+  
+    <div class="card-group main d-none px-2">
+      <!-- card 1 -->
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="card-title text-center text-secondary text-center">City</h3>
+          <h2 extra-large class="text-dark font-weight-bold text-center">High</h2 extra-large>
+          <h5 small class="text-muted font-weight-bold text-center">Low</h5 small>
+  
+        </div>
+        <div class="text-center">
+          <img style="max-width: 45%;"src="https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee" alt="Card image cap">
+        </div>
+        
+        <div id="stats" class="card-body text-center">
+          <p class="card-text text-left .bg-secondary" ><b>Precipitation:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Humidity:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Wind:</b>  mph</p>
+          <h6 class="card-text text-left text-dark-bold" ><b>Summary</b></h6>
+        </div>
+        <div class="card-footer bg-info text-center">
+          <extra-large class="text-light font-weight-bold">Day1</extra-large>
+          <!-- <h6 class="text-dark font-weight-bold">Summary</h6> -->
+        </div>
+      </div>
+      <!-- card 2 -->
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="card-title text-center text-secondary text-center">City</h3>
+          <h2 extra-large class="text-dark font-weight-bold text-center">High</h2 extra-large>
+          <h5 small class="text-muted font-weight-bold text-center">Low</h5 small>
+  
+        </div>
+        <div class="text-center">
+          <img style="max-width: 45%;"src="https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee" alt="Card image cap">
+        </div>
+        <div id="stats" class="card-body text-center">
+          <p class="card-text text-left .bg-secondary" ><b>Precipitation:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Humidity:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Wind:</b>  mph</p>
+          <h6 class="card-text text-left text-dark-bold" ><b>Summary</b></h6>
+        </div>
+        <div class="card-footer bg-info text-center">
+          <extra-large class="text-light font-weight-bold">Day2</extra-large>
+        </div>
+      </div>
+  <!-- card 3 -->
+  <div class="card">
+    <div class="card-body text-center">
+      <h3 class="card-title text-center text-secondary text-center">City</h3>
+      <h2 extra-large class="text-dark font-weight-bold text-center">High</h2 extra-large>
+      <h5 small class="text-muted font-weight-bold text-center">Low</h5 small>
+  
+    </div>
+    <div class="text-center">
+      <img style="max-width: 45%;"src="https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee" alt="Card image cap">
+    </div>
+    <div id="stats" class="card-body text-center">
+      <p class="card-text text-left .bg-secondary" ><b>Precipitation:</b> %</p>
+      <p class="card-text text-left .bg-secondary" ><b>Humidity:</b> %</p>
+      <p class="card-text text-left .bg-secondary" ><b>Wind:</b>  mph</p>
+      <h6 class="card-text text-left text-dark-bold" ><b>Summary</b></h6>
+    </div>
+    <div class="card-footer bg-info text-center">
+      <extra-large class="text-light font-weight-bold">Day3</extra-large>
+    </div>
+  </div>
+     
+      <!-- card 4 -->
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="card-title text-center text-secondary text-center">City</h3>
+          <h2 extra-large class="text-dark font-weight-bold text-center">High</h2 extra-large>
+          <h5 small class="text-muted font-weight-bold text-center">Low</h5 small>
+  
+        </div>
+        <div class="text-center">
+          <img style="max-width: 45%;"src="https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee" alt="Card image cap">
+        </div>
+        <div id="stats" class="card-body text-center">
+          <p class="card-text text-left .bg-secondary" ><b>Precipitation:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Humidity:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Wind:</b>  mph</p>
+          <h6 class="card-text text-left text-dark-bold" ><b>Summary</b></h6>
+        </div>
+        <div class="card-footer bg-info text-center">
+          <extra-large class="text-light font-weight-bold">Day4</extra-large>
+          <!-- <h6 class="text-dark font-weight-bold">Summary</h6> -->
+        </div>
+      </div>
+      <!-- card 5 -->
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="card-title text-center text-secondary text-center">City</h3>
+          <h2 extra-large class="text-dark font-weight-bold text-center">High</h2 extra-large>
+          <h5 small class="text-muted font-weight-bold text-center">Low</h5 small>
+  
+        </div>
+        <div class="text-center">
+          <img style="max-width: 45%;"src="https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee" alt="Card image cap">
+        </div>
+        <div id="stats" class="card-body text-center">
+          <p class="card-text text-left .bg-secondary" ><b>Precipitation:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Humidity:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Wind:</b>  mph</p>
+          <h6 class="card-text text-left text-dark-bold" ><b>Summary</b></h6>
+        </div>
+        <div class="card-footer bg-info text-center">
+          <extra-large class="text-light font-weight-bold">Day5</extra-large>
+          <!-- <h6 class="text-dark font-weight-bold">Summary</h6> -->
+        </div>
+      </div>
+  
+      <!-- card 6 -->
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="card-title text-center text-secondary text-center">City</h3>
+          <h2 extra-large class="text-dark font-weight-bold text-center">High</h2 extra-large>
+          <h5 small class="text-muted font-weight-bold text-center">Low</h5 small>
+  
+        </div>
+        <div class="text-center">
+          <img style="max-width: 45%;"src="https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee" alt="Card image cap">
+        </div>
+        <div id="stats" class="card-body text-center">
+          <p class="card-text text-left .bg-secondary" ><b>Precipitation:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Humidity:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Wind:</b>  mph</p>
+          <h6 class="card-text text-left text-dark-bold" ><b>Summary</b></h6>
+        </div>
+        <div class="card-footer bg-info text-center">
+          <extra-large class="text-light font-weight-bold">Day6</extra-large>
+          <!-- <h6 class="text-dark font-weight-bold">Summary</h6> -->
+        </div>
+      </div>
+  
+      <!-- card 7 -->
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="card-title text-center text-secondary text-center">City</h3>
+          <h2 extra-large class="text-dark font-weight-bold text-center">High</h2 extra-large>
+          <h5 small class="text-muted font-weight-bold text-center">Low</h5 small>
+  
+        </div>
+        <div class="text-center">
+          <img style="max-width: 45%;"src="https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee" alt="Card image cap">
+        </div>
+        <div id="stats" class="card-body text-center">
+          <p class="card-text text-left .bg-secondary" ><b>Precipitation:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Humidity:</b> %</p>
+          <p class="card-text text-left .bg-secondary" ><b>Wind:</b>  mph</p>
+          <h6 class="card-text text-left text-dark-bold" ><b>Summary</b></h6>
+        </div>
+        <div class="card-footer bg-info text-center">
+          <extra-large class="text-light font-weight-bold">Day7</extra-large>
+          <!-- <h6 class="text-dark font-weight-bold">Summary</h6> -->
+        </div>
+      </div>
+  
+    </div>
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"> 
+  <!-- Firebase CDN -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.16.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+     <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCbvg3XiwXNfdGLl8NdaJESSFzaEOiUVeQ",
+        authDomain: "final-project-js19.firebaseapp.com",
+        databaseURL: "https://final-project-js19.firebaseio.com",
+        projectId: "final-project-js19",
+        storageBucket: "final-project-js19.appspot.com",
+        messagingSenderId: "2581164537",
+        appId: "1:2581164537:web:9c3abf6ba7f49c3fe7cd28"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+  <!-- js -->
+  <script src="js/bundle.js"></script>
+</body>
+
+</html>
