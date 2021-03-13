@@ -1,6 +1,8 @@
+// npm and environemnt initialization for clientID and client secret
 const fetch = require("node-fetch");
-// const clientId = 'mBQGb6NKoSDfUtVEL1ukN'
-// const weatherKey = 'rZ3eULU8H7EDFxUe82E3sAEch32vhbKzucWTXJt7';
+require('dotenv').config();
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 // Weather Images
 const sunnyImg = 'https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_clear.png?alt=media&token=99f13f01-23a5-4992-a8bc-12e66408bfee'
@@ -9,8 +11,6 @@ const rainImg = 'https://firebasestorage.googleapis.com/v0/b/final-project-js19.
 const lessRainImg = 'https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_rain.png?alt=media&token=dd56adaa-86e1-471c-86e5-dbccbd46c061'
 const lightStorm = 'https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_rain.png?alt=media&token=dd56adaa-86e1-471c-86e5-dbccbd46c061'
 const scatteredStorm = 'https://firebasestorage.googleapis.com/v0/b/final-project-js19.appspot.com/o/weatherImages%2Fday_rain_thunder.png?alt=media&token=39cc4521-fd06-447b-ac00-856016d4b99c'
-// const sunnyImg = 
-
 
 // Weather Cards DOM Elements
 const cityNameText = document.querySelectorAll('.card-group.main .card h3');
@@ -36,6 +36,7 @@ let errorUnhide = (text) => {
     errorAlert.classList.remove('d-none');
     searchInput.value = ''
 }
+
 // Hide Error
 let errorHide = () => {
     errorAlert.classList.add('d-none');
@@ -64,23 +65,23 @@ searchForm.addEventListener('submit', e => {
     } else {
         errorHide();
         showWeather();
-        fetch(`https://api.aerisapi.com/places/search?query=zipcode:${searchTerm}?&format=json&client_id=mBQGb6NKoSDfUtVEL1ukN&client_secret=rZ3eULU8H7EDFxUe82E3sAEch32vhbKzucWTXJt7`)
+        fetch(`https://api.aerisapi.com/places/search?query=zipcode:${searchTerm}?&format=json&client_id=${clientId}&client_secret=${clientSecret}`)
             .then(res => res.json())
             .then(data => {
-                // if(data.error.code === 'warn_no_data'){
-                //     errorUnhide('Zip code does not match our records, please try another.')
-                //     hideWeather();
-                // } else if (data.error.code === 'null') {
+                if(data.error.code === 'warn_no_data'){
+                    errorUnhide('Zip code does not match our records, please try another.')
+                    hideWeather();
+                } else if (data.error.code === 'null') {
                 for (i = 0; i < 7; i++) {
                     cityNameText[i].textContent = data.response[0].place.name
                 }
-                // showWeather();
+                showWeather();
 
 
-
+            }
             });
 
-        fetch(`https://api.aerisapi.com/forecasts/${searchTerm}?&format=json&filter=day&limit=7&client_id=mBQGb6NKoSDfUtVEL1ukN&client_secret=rZ3eULU8H7EDFxUe82E3sAEch32vhbKzucWTXJt7`)
+        fetch(`https://api.aerisapi.com/forecasts/${searchTerm}?&format=json&filter=day&limit=7&client_id=${clientId}&client_secret=${clientSecret}`)
             .then(res => res.json())
             .then(data => {
                 console.log('here!');
@@ -159,5 +160,3 @@ searchForm.addEventListener('submit', e => {
     }
 
 });
-
-let newVar = firebase.database().ref() 

@@ -20,7 +20,7 @@ const tempLowText = document.querySelectorAll('.card-group.main .card h5');
 const mainStatsText = document.querySelectorAll('#stats');
 const weatherCards = document.querySelector('.card-group.main');
 const summaryText = document.querySelectorAll('.card-group.main .card .card-footer.bg-info.text-center h6');
-let weekDayText = document.querySelectorAll('.card-group.main .card .card-footer.bg-info.text-center extra-large');
+const weekDayText = document.querySelectorAll('.card-group.main .card .card-footer.bg-info.text-center extra-large');
 const errorAlert = document.querySelector('#error-component');
 const errorText = document.querySelector('#error-text');
 const allImgs = document.querySelectorAll('img');
@@ -32,23 +32,22 @@ const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 
 // Reveal Error
-let errorUnhide = (text) =>{
+let errorUnhide = (text) => {
     errorText.innerText = `${text}`
     errorAlert.classList.remove('d-none');
     searchInput.value = ''
 }
+
 // Hide Error
-let errorHide = () =>{
+let errorHide = () => {
     errorAlert.classList.add('d-none');
 }
 
 // Show Weather
-
 let showWeather = () => {
     weatherCards.classList.remove('d-none')
 }
 // Hide Weather
-
 let hideWeather = () => {
     weatherCards.classList.add('d-none')
 }
@@ -57,71 +56,71 @@ let hideWeather = () => {
 searchForm.addEventListener('submit', e => {
     e.preventDefault();
     let searchTerm = searchInput.value;
-    
+
     if (searchTerm === '') {
         errorUnhide('Please enter a US zipcode');
     } else if (String(Number(searchTerm)) === 'NaN') {
         errorUnhide('Please enter a valid zipcode');
-    } else if (typeof(Number(searchTerm)) === 'number' && searchTerm.length !== 5) {
+    } else if (typeof (Number(searchTerm)) === 'number' && searchTerm.length !== 5) {
         errorUnhide('Please enter a valid zipcode');
-    } else { 
+    } else {
         errorHide();
         showWeather();
-        fetch(`https://api.aerisapi.com/places/search?query=zipcode:${searchTerm}?&format=json&client_id=mBQGb6NKoSDfUtVEL1ukN&client_secret=rZ3eULU8H7EDFxUe82E3sAEch32vhbKzucWTXJt7`)
-        .then(res => res.json())
-        .then(data => {
-            // if(data.error.code === 'warn_no_data'){
-            //     errorUnhide('Zip code does not match our records, please try another.')
-            //     hideWeather();
-            // } else if (data.error.code === 'null') {
-                for(i = 0; i < 7; i++){
+        fetch(`https://api.aerisapi.com/places/search?query=zipcode:${searchTerm}?&format=json&client_id=J1k74yxe8mDSUIoaNuuCI&client_secret=nrBGLfKEloYVRu8piDoyahFqi6hSYRz3kWAa9rrV`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.error.code === 'warn_no_data'){
+                    errorUnhide('Zip code does not match our records, please try another.')
+                    hideWeather();
+                } else if (data.error.code === 'null') {
+                for (i = 0; i < 7; i++) {
                     cityNameText[i].textContent = data.response[0].place.name
                 }
-                // showWeather();
-                
-            
-        
-        });
+                showWeather();
 
-        fetch(`https://api.aerisapi.com/forecasts/${searchTerm}?&format=json&filter=day&limit=7&client_id=mBQGb6NKoSDfUtVEL1ukN&client_secret=rZ3eULU8H7EDFxUe82E3sAEch32vhbKzucWTXJt7`)
-        .then(res => res.json())
-        .then(data => {
-            console.log('here!');
-            let weatherArr = [{}, {}, {}, {}, {}, {}, {} ];
-            for(i = 0; i < weatherArr.length; i++) {
-                weatherArr[i].maxTempF = data.response[0].periods[i].maxTempF
-                weatherArr[i].minTempF = data.response[0].periods[i].minTempF
-                weatherArr[i].avgHumidity = Math.round((data.response[0].periods[i].maxHumidity + data.response[0].periods[i].minHumidity) / 2)
-                weatherArr[i].percentPrecip = data.response[0].periods[i].pop
-                weatherArr[i].summary = data.response[0].periods[i].weatherPrimary
-                weatherArr[i].windMph = data.response[0].periods[i].windSpeedMaxMPH
-                weatherArr[i].dayOfWeek = new Date(data.response[0].periods[i].dateTimeISO).getDay();
-                switch (weatherArr[i].dayOfWeek) {
-                    case 0:
-                        weatherArr[i].dayOfWeek = "Sunday";
-                        break;
-                    case 1:
-                        weatherArr[i].dayOfWeek = "Monday";
-                        break;
-                    case 2:
-                        weatherArr[i].dayOfWeek = "Tuesday";
-                        break;
-                    case 3:
-                        weatherArr[i].dayOfWeek = "Wednesday";
-                        break;
-                    case 4:
-                        weatherArr[i].dayOfWeek = "Thursday";
-                        break;
-                    case 5:
-                        weatherArr[i].dayOfWeek = "Friday";
-                        break;
-                    case 6:
-                        weatherArr[i].dayOfWeek = "Saturday";
-                        break;
-                }
-        
+
             }
-                for(i = 0; i < weatherArr.length; i++) {
+            });
+
+        fetch(`https://api.aerisapi.com/forecasts/${searchTerm}?&format=json&filter=day&limit=7&client_id=J1k74yxe8mDSUIoaNuuCI&client_secret=nrBGLfKEloYVRu8piDoyahFqi6hSYRz3kWAa9rrV`)
+            .then(res => res.json())
+            .then(data => {
+                console.log('here!');
+                let weatherArr = [{}, {}, {}, {}, {}, {}, {}];
+                for (i = 0; i < weatherArr.length; i++) {
+                    weatherArr[i].maxTempF = data.response[0].periods[i].maxTempF
+                    weatherArr[i].minTempF = data.response[0].periods[i].minTempF
+                    weatherArr[i].avgHumidity = Math.round((data.response[0].periods[i].maxHumidity + data.response[0].periods[i].minHumidity) / 2)
+                    weatherArr[i].percentPrecip = data.response[0].periods[i].pop
+                    weatherArr[i].summary = data.response[0].periods[i].weatherPrimary
+                    weatherArr[i].windMph = data.response[0].periods[i].windSpeedMaxMPH
+                    weatherArr[i].dayOfWeek = new Date(data.response[0].periods[i].dateTimeISO).getDay();
+                    switch (weatherArr[i].dayOfWeek) {
+                        case 0:
+                            weatherArr[i].dayOfWeek = "Sunday";
+                            break;
+                        case 1:
+                            weatherArr[i].dayOfWeek = "Monday";
+                            break;
+                        case 2:
+                            weatherArr[i].dayOfWeek = "Tuesday";
+                            break;
+                        case 3:
+                            weatherArr[i].dayOfWeek = "Wednesday";
+                            break;
+                        case 4:
+                            weatherArr[i].dayOfWeek = "Thursday";
+                            break;
+                        case 5:
+                            weatherArr[i].dayOfWeek = "Friday";
+                            break;
+                        case 6:
+                            weatherArr[i].dayOfWeek = "Saturday";
+                            break;
+                    }
+
+                }
+                for (i = 0; i < weatherArr.length; i++) {
                     tempHighText[i].innerText = weatherArr[i].maxTempF + '\u00B0'
                     tempLowText[i].innerText = weatherArr[i].minTempF + '\u00B0'
                     mainStatsText[i].innerHTML = `<div id="stats" class="card-body text-center">
@@ -132,41 +131,38 @@ searchForm.addEventListener('submit', e => {
                     </div>`
                     // summaryText[i].innerText = weatherArr[i].summary
                     weekDayText[i].innerText = weatherArr[i].dayOfWeek
-                    if(weatherArr[i].summary === 'Sunny'){
+                    if (weatherArr[i].summary === 'Sunny') {
                         allImgs[i].src = sunnyImg
                     } else if (weatherArr[i].summary === 'Mostly Sunny') {
                         allImgs[i].src = mostlysunnyImg
-                    } 
+                    }
                     else if (weatherArr[i].summary === 'Partly Cloudy') {
                         allImgs[i].src = mostlysunnyImg
-                    } 
-                    else if (weatherArr[i].summary === 'Isolated Storms'){
+                    }
+                    else if (weatherArr[i].summary === 'Isolated Storms') {
                         allImgs[i].src = lightStorm
                     }
-                    else if (weatherArr[i].summary === 'Scattered Storms'){
+                    else if (weatherArr[i].summary === 'Scattered Storms') {
                         allImgs[i].src = scatteredStorm
                     }
-                    else if (weatherArr[i].summary === 'Showers'){
+                    else if (weatherArr[i].summary === 'Showers') {
                         allImgs[i].src = rainImg
                     }
-                    else if (weatherArr[i].summary === 'Scattered Showers'){
+                    else if (weatherArr[i].summary === 'Scattered Showers') {
                         allImgs[i].src = lessRainImg
                     }
-                    else if (weatherArr[i].summary === 'Isolated Showers'){
+                    else if (weatherArr[i].summary === 'Isolated Showers') {
                         allImgs[i].src = lessRainImg
                     }
-                    
+
                 }
-            
-                });
-            }
-    
+
+            });
+    }
+
 });
 
-
-
-
-
+// let newVar = firebase.database().ref() 
 },{"node-fetch":2}],2:[function(require,module,exports){
 (function (global){
 "use strict";
@@ -187,7 +183,9 @@ var global = getGlobal();
 module.exports = exports = global.fetch;
 
 // Needed for TypeScript and Webpack.
-exports.default = global.fetch.bind(global);
+if (global.fetch) {
+	exports.default = global.fetch.bind(global);
+}
 
 exports.Headers = global.Headers;
 exports.Request = global.Request;
